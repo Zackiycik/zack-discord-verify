@@ -1,0 +1,53 @@
+# ---- Dependencies
+node_modules/
+.pnp.*
+.yarn/
+
+# ---- Secrets: only the *.example templates are committed
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+
+# ---- Runtime data (database, lock files, backups, logs)
+bot/data/
+data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.lock
+!package-lock.json
+logs/
+*.log
+npm-debug.log*
+
+# ---- Build output and caches
+.next/
+out/
+dist/
+build/
+coverage/
+.vercel/
+.turbo/
+.cache/
+*.tsbuildinfo
+next-env.d.ts
+
+# ---- Editors, OS, local tooling
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+.claude/
+graphify-out/
+
+# ---- Temporary files
+tmp/
+*.tmp
+*.bak

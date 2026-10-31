@@ -1,0 +1,38 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: bot/package-lock.json }
+      - run: npm ci
+        working-directory: bot
+      - run: npm run typecheck
+        working-directory: bot
+      - run: npm test
+        working-directory: bot
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: "web/package-lock.json" }
+      # the web tests import the bot's signing code to check the shared contract
+      - run: npm ci
+        working-directory: bot
+      - run: npm ci
+        working-directory: web
+      - run: npm run typecheck
+        working-directory: web
+      - run: npm test
+        working-directory: web
+      - run: npm run build
+        working-directory: web
+        env:
+          APP_URL: https://verify.example.com

@@ -1,0 +1,176 @@
+/*
+ * Theme tokens: Discord's own surface greys and flat buttons, laid out as separate rounded "bento" cards.
+ * Flat colours only (no gradients). Dark by default, light when the visitor's system prefers it.
+ * Shape rule: cards 16px, buttons 3px (like Discord), status tags are pills.
+ */
+:root {
+    --ground: #1e1f22;
+    --surface: #2b2d31;
+    --surface-raised: #313338;
+    --line: #3f4147;
+    --ink: #f2f3f5;
+    --ink-muted: #b5bac1;
+    --accent: #23a55a;
+    --btn-primary: #248046;
+    --btn-primary-hover: #1a6334;
+    --btn-secondary: #4e5058;
+    --btn-secondary-hover: #6d6f78;
+    --btn-text: #ffffff;
+    --ok: #23a55a;
+    --warn: #f0b232;
+    --bad: #f23f43;
+    --info: #00a8fc;
+    --radius-card: 16px;
+    --radius-btn: 3px;
+    --font-sans: var(--font-geist), 'gg sans', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --ground: #ffffff;
+        --surface: #f2f3f5;
+        --surface-raised: #e3e5e8;
+        --line: #d4d7dc;
+        --ink: #060607;
+        --ink-muted: #4e5058;
+        --accent: #1a7f43;
+        --btn-secondary: #e3e5e8;
+        --btn-secondary-hover: #d4d7dc;
+        --ok: #1a7f43;
+        --warn: #946a00;
+        --bad: #c42b2f;
+        --info: #0a5fa8;
+        color-scheme: light;
+    }
+    .btn:not(.primary) { color: #313338; }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+    background: var(--ground);
+    color: var(--ink);
+    font: 16px/1.6 var(--font-sans);
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--info); outline-offset: 3px; }
+
+/* Browser surfaces carry the palette too. */
+::selection { background: color-mix(in srgb, var(--info) 40%, transparent); color: var(--ink); }
+input, button { caret-color: var(--info); }
+html { scrollbar-color: var(--btn-secondary) transparent; }
+
+/* ---- Frame */
+.page { max-width: 640px; margin: 0 auto; padding: 0 20px 56px; }
+.page.wide { max-width: 1040px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 0; }
+.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: -0.02em; text-decoration: none; }
+.logo svg { color: var(--accent); }
+.panel, .card { background: var(--surface); border-radius: var(--radius-card); padding: clamp(24px, 4vw, 40px); }
+
+.foot { margin-top: 24px; font-size: 13px; color: var(--ink-muted); }
+
+/* ---- Typography */
+h1 { font-size: clamp(2rem, 5.4vw, 3.4rem); line-height: 1.05; letter-spacing: -0.035em; font-weight: 700; margin: 0 0 16px; text-wrap: balance; }
+h2 { font-size: 18px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 12px; }
+.lead { color: var(--ink-muted); margin: 0 0 8px; max-width: 52ch; }
+.lead strong { color: var(--ink); font-weight: 600; }
+
+/* ---- Landing: bento cards (intro tall on the left, action and data stacked on the right) */
+.bento { display: grid; gap: 16px; }
+@media (min-width: 840px) {
+    .bento { grid-template-columns: 1.15fr 1fr; grid-auto-rows: auto; align-items: stretch; }
+    .bento .intro { grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
+}
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.steps li { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--surface-raised); border-radius: 12px; }
+.steps svg { flex: none; color: var(--accent); }
+.action { display: grid; gap: 18px; align-content: start; }
+
+.data ul { margin: 0 0 12px; padding-left: 1.2rem; }
+.data li { margin: 6px 0; color: var(--ink-muted); font-size: 14px; }
+
+/* ---- Consent and buttons */
+.start, .challenge { display: grid; gap: 16px; }
+.consent { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--ink-muted); cursor: pointer; }
+.consent input { flex: none; width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--btn-primary); cursor: pointer; }
+
+/* Discord-style button: flat, 3px radius, no border; grey by default, green for the main action. */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 40px; padding: 2px 18px; border: 0; border-radius: var(--radius-btn);
+    background: var(--btn-secondary); color: var(--btn-text); white-space: nowrap; text-decoration: none; cursor: pointer;
+    font: 500 14px/1 var(--font-sans);
+    transition: background-color 160ms ease, transform 160ms var(--ease-out);
+}
+.btn.primary { background: var(--btn-primary); color: var(--btn-text); }
+.btn.small { min-height: 32px; padding: 2px 16px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:active:not(:disabled) { transform: scale(0.97); }
+.btn .arrow { transition: transform 160ms var(--ease-out); }
+/* Hover effects only on devices that really hover: touch screens fire :hover on tap. */
+@media (hover: hover) and (pointer: fine) {
+    .btn:hover:not(:disabled) { background: var(--btn-secondary-hover); }
+    .btn.primary:hover:not(:disabled) { background: var(--btn-primary-hover); }
+    .btn:hover:not(:disabled) .arrow { transform: translateX(3px); }
+}
+
+/* Loading state: a placeholder shaped like the widget until Turnstile injects its iframe. */
+.turnstile { min-height: 70px; max-width: 300px; }
+.turnstile:empty { border-radius: 8px; background: var(--surface-raised); }
+@media (prefers-reduced-motion: no-preference) {
+    .turnstile:empty { animation: pulse 1.4s ease-in-out infinite; }
+}
+@keyframes pulse { 50% { opacity: 0.5; } }
+.hint { color: var(--ink-muted); font-size: 13px; margin: 0; }
+.error {
+    margin: 0; padding: 11px 14px; border-radius: 8px; font-size: 14px;
+    background: color-mix(in srgb, var(--bad) 14%, transparent); color: var(--ink);
+}
+
+/* ---- Status notice */
+.notice { --tone: var(--info); max-width: 520px; }
+.notice.ok { --tone: var(--ok); }
+.notice.warn { --tone: var(--warn); }
+.notice.bad { --tone: var(--bad); }
+.tag {
+    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 18px; padding: 5px 12px 5px 9px;
+    border-radius: 999px; color: var(--tone); font-size: 13px; font-weight: 600;
+    background: color-mix(in srgb, var(--tone) 16%, transparent);
+}
+.notice p { margin: 0 0 22px; color: var(--ink-muted); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---- Privacy notice */
+.prose { max-width: 62ch; }
+.prose h2 { margin: 30px 0 8px; }
+.prose ul { margin: 0; padding-left: 1.2rem; }
+.prose li { margin: 6px 0; color: var(--ink-muted); }
+.prose .back { margin-top: 32px; }
+
+/*
+ * Entry: the one authored moment. Seen once per verification, so a short, calm cascade
+ * (under 300ms each, 50ms apart). Reduced motion keeps the fade and drops the movement.
+ */
+.bento > *, .panel > *, .notice > * { animation: rise 280ms var(--ease-out) both; }
+.bento > :nth-child(2), .notice > :nth-child(3) { animation-delay: 50ms; }
+.bento > :nth-child(3), .notice > :nth-child(4) { animation-delay: 100ms; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+@keyframes fade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+    .bento > *, .panel > *, .notice > * { animation-name: fade; animation-delay: 0ms !important; }
+    .btn:active:not(:disabled) { transform: none; }
+}
+
+@media (max-width: 520px) {
+    .btn { width: 100%; }
+    .btn.small { width: auto; }
+    .actions { flex-direction: column; }
+}

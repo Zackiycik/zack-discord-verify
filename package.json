@@ -1,0 +1,17 @@
+{
+  "name": "zack-verify",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web-based Discord member verification: OAuth + Turnstile + a risk engine, with staff review inside Discord.",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "install:all": "npm --prefix bot install && npm --prefix web install",
+    "bot:start": "npm --prefix bot start",
+    "bot:deploy": "npm --prefix bot run deploy",
+    "typecheck": "npm --prefix bot run typecheck && npm --prefix web run typecheck",
+    "test": "npm --prefix bot test && npm --prefix web test",
+    "web:dev": "npm --prefix web run dev",
+    "web:build": "npm --prefix web run build"
+  }
+}
