@@ -71,7 +71,7 @@ The panel members click, and what staff see. Suspicious attempts arrive with **A
 ## Quick start
 
 ```bash
-git clone <this repository> && cd zack-verify
+git clone https://github.com/Zackiycik/zack-discord-verify.git && cd zack-discord-verify
 npm run install:all
 
 cp bot/.env.example bot/.env       # fill it in
